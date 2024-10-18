@@ -869,7 +869,7 @@ body {
 }
 @media screen and (max-width: 768px) {
     .temperature {
-        font-size: 48px;
+        font-size: 40px;
     }
     
 }
