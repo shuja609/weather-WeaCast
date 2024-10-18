@@ -4,6 +4,8 @@
 
 This project is a fully responsive weather dashboard that provides current weather information and a 5-day forecast for any city. It integrates the OpenWeather API for weather data and the Gemini API for chatbot functionality. The dashboard also features data visualization using Chart.js.
 
+## Live Demo
+[Live Demo]( https://shuja609.github.io/weather-WeaCast/)
 ## Features
 
 - Current weather display with dynamic background based on weather conditions
