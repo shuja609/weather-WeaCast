@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../resources/images/drizzle.png" type="image/x-icon" />
+    <title>WeaCast</title>
+    <link rel="stylesheet" href="../style/styles.css" />
+   
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMnOZgOG7eHqRjJ1Wmqj9xz96O8+Y0hR8Q9kgj" crossorigin="anonymous"> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="light-theme">
+    <button class="toggle-button" id="sidebarToggle" onclick="toggleSidebar()">
+      <i class="fas fa-hamburger"></i>
+  </button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button id="closeSidebar" class="close-button">&times;</button>
+      <div class="logo">
+        <img src="../resources/images/logo.png" alt="Weather Logo" />
+        <h1>WeaCast</h1>
+      </div>
+      <nav class="nav">
+        <ul>
+          <li >
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li >
+            <a href="../pages/tables.html"><i class="fas fa-cloud-sun"></i> Forecast</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header with search, theme, and unit toggle -->
+      <header class="header">
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Search city..."
+            class="search-input"
+            id="cityInput"
+          />
+          <button class="search-btn" id="searchBtn">Search</button>
+          <div class="checkbox-wrapper-8">
+            <input type="checkbox" id="cb3-8" class="tgl tgl-skewed" />
+            <label
+              for="cb3-8"
+              data-tg-on="°F"
+              data-tg-off="°C"
+              class="tgl-btn"
+            ></label>
+          </div>
+        </div>
+        <div class="toggles">
+          <div class="profile">
+            <img
+              src="../resources/images/image1.png"
+              alt="User Profile"
+              id="userProfile"
+            />
+            <p><strong>M Shuja Uddin</strong></p>
+          </div>
+            <div id="developerDetailsModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div class="developer-card">
+                <img
+                  src="../resources/images/image1.png"
+                  alt="Developer Icon"
+                  class="developer-icon"
+                />
+                <h2>Mohammad Shuja Uddin</h2>
+                <p class="job-title"><strong>Software Engineer</strong></p>
+                <p class="university">
+                  FAST National University of Science and Technology
+                </p>
+                <p class="email">
+                  Email:
+                    <a href="mailto:i222553@nu.edu.com"><strong><em>i222553@nu.edu.com</em></strong></a>
+                </p>
+                <p class="skills">
+                  Skills: web development, software engineering, UI/UX design
+                </p>
+                <!-- <div class="social-media">
+                  <a href="#" aria-label="Twitter"
+                  ><img src="resources/images/insta.png"  alt="Twitter"
+                /></a>
+                <a href="#" aria-label="Facebook"
+                  ><img src="resources/images/insta.png" alt="Facebook"
+                /></a>
+                <a href="#" aria-label="Instagram"
+                  ><img src="resources/images/insta.png" alt="Instagram"
+                /></a>
+              </div> -->
+              </div>
+            </div>
+          </div>
+
+          <label class="ui-switch">
+            <input type="checkbox" />
+            <div class="slider">
+              <div class="circle"></div>
+            </div>
+          </label>
+        </div>
+      </header>
+      <section class="table-container">
+        <div class="flex-container">
+          <div class="table-box ">
+            <h2>Weather Forecast</h2>
+            
+                <select id="filter-select" class="filter-container">
+                  <option value="none">Select a filter</option>
+                  <option value="asc">Sort by Temperature (Ascending)</option>
+                  <option value="desc">Sort by Temperature (Descending)</option>
+                  <option value="rain">Filter Days with Rain</option>
+                  <option value="highest">Show Day with Highest Temperature</option>
+                  <option value="reset">Reset Filters</option>
+                </select>
+            <table id="weatherTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Day of Week</th>
+                  <th>Time</th> <!-- New Time column -->
+                  <th id="temperature">Temperature (°C)</th>
+                  <th>Weather</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <!-- Weather data will be dynamically inserted here -->
+              </tbody>
+          
+            </table>
+            
+            <div class="pagination">
+              <button id="prevPage" disabled>Previous</button>
+              <span id="currentPage">1</span>
+              <button id="nextPage">Next</button>
+            </div>
+          </div>
+          
+          <div class="chatbot-box">
+            <div class="chatbot-header">
+              <h3>Chatbot</h3>
+            </div>
+            <div class="chatbot-body" id="chatBody">
+              <!-- Chat messages will be dynamically inserted here -->
+            </div>
+            <div class="chatbot-footer">
+              <input type="text" id="userInput" placeholder="Type your message..." />
+              <button id="sendMessageBtn">Send</button>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+    
+      <footer class="footer">
+        <div class="footer-content">
+          <!-- Logo and Social Media Links -->
+          <div class="footer-section footer-logo-social">
+            <p class="footer-logo">WeaCast</p>
+            <p>Stay updated with real-time weather forecasts.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"
+                ><img src="../resources/images/insta.png" alt="Twitter"
+              /></a>
+              <a href="#" aria-label="Facebook"
+                ><img src="../resources/images/insta.png" alt="Facebook"
+              /></a>
+              <a href="#" aria-label="Instagram"
+                ><img src="../resources/images/insta.png" alt="Instagram"
+              /></a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Weather Map</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter Subscription -->
+          <div class="footer-section footer-newsletter">
+            <h4>Subscribe to Our Newsletter</h4>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" required />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+
+          <!-- Contact Us -->
+          <div class="footer-section footer-contact">
+            <h4>Contact Us</h4>
+            <p>Email: support@weacast.com</p>
+            <p>Phone: +1 800 123 456</p>
+            <p>Address: 123 Weather St, New York, USA</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 WeaCast. All rights reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </div>
+      </footer>
+    </main>
+
+   
+    <script src="../scripts/table-chatbot.js"></script>
+  </body>
+</html>

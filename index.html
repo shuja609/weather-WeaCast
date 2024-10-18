@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="resources/images/drizzle.png" type="image/x-icon" />
+    <title>WeaCast</title>
+    <link rel="stylesheet" href="style/styles.css" />
+   
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMnOZgOG7eHqRjJ1Wmqj9xz96O8+Y0hR8Q9kgj" crossorigin="anonymous"> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="light-theme">
+    
+    <button class="toggle-button" id="sidebarToggle" onclick="toggleSidebar()">
+      <i class="fas fa-hamburger"></i>
+  </button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button id="closeSidebar" class="close-button">&times;</button>
+      <div class="logo">
+        <img src="resources/images/logo.png" alt="Weather Logo" />
+        <h1>WeaCast</h1>
+      </div>
+      <nav class="nav">
+        <ul>
+            <li >
+            <a href="index.html" ><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li ">
+            <a href="pages/tables.html"><i class="fas fa-cloud-sun"></i> Forecast</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header with search, theme, and unit toggle -->
+      <header class="header">
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Search city..."
+            class="search-input"
+            id="cityInput"
+          />
+          <button class="search-btn" id="searchBtn">Search</button>
+          <div class="checkbox-wrapper-8">
+            <input type="checkbox" id="cb3-8" class="tgl tgl-skewed" />
+            <label
+              for="cb3-8"
+              data-tg-on="°F"
+              data-tg-off="°C"
+              class="tgl-btn"
+            ></label>
+          </div>
+        </div>
+        <div class="toggles">
+          <div class="profile">
+            <img
+              src="resources/images/image1.png"
+              alt="User Profile"
+              id="userProfile"
+            />
+            <p><strong>M Shuja Uddin</strong></p>
+          </div>
+            <div id="developerDetailsModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div class="developer-card">
+                <img
+                  src="resources/images/image1.png"
+                  alt="Developer Icon"
+                  class="developer-icon"
+                />
+                <h2>Mohammad Shuja Uddin</h2>
+                <p class="job-title"><strong>Software Engineer</strong></p>
+                <p class="university">
+                  FAST National University of Science and Technology
+                </p>
+                <p class="email">
+                  Email:
+                    <a href="mailto:i222553@nu.edu.com"><strong><em>i222553@nu.edu.com</em></strong></a>
+                </p>
+                <p class="skills">
+                  Skills: web development, software engineering, UI/UX design
+                </p>
+                <!-- <div class="social-media">
+                  <a href="#" aria-label="Twitter"
+                  ><img src="resources/images/insta.png"  alt="Twitter"
+                /></a>
+                <a href="#" aria-label="Facebook"
+                  ><img src="resources/images/insta.png" alt="Facebook"
+                /></a>
+                <a href="#" aria-label="Instagram"
+                  ><img src="resources/images/insta.png" alt="Instagram"
+                /></a>
+              </div> -->
+              </div>
+            </div>
+          </div>
+
+          <label class="ui-switch">
+            <input type="checkbox" />
+            <div class="slider">
+              <div class="circle"></div>
+            </div>
+          </label>
+        </div>
+      </header>
+
+      <!-- Weather Grid -->
+      <section class="weather-grid">
+        <!-- First row (1 card, spans full width) -->
+        <div class="weather-card full-width">
+          <h2>Weather Data Based on City</h2>
+          <div class="widget">
+            <div class="widget-header">
+              <div class="heading">
+                <h1 class="app-title" id="city"></h1>
+                <p class="date-time" id="day"></p>
+                <p class="date-time" id="date"></p>
+                <p class="date-time" id="time"></p>
+              </div>
+              <div class="weather-status">
+                <p class="weather-text" id="description"></p>
+                <div class="sun-icon" id="icon"></div>
+              </div>
+            </div>
+            <div class="details">
+              <div class="temperature" id="temperature">25°C</div>
+              <div class="weather-details">
+                <p>Wind Speed: 12 Km/h</p>
+                <p>Humidity: 65%</p>
+                <p>Pressure: 1013 hPa</p>
+                <p>Sunrise: 6:15 AM</p>
+                <p>Sunset: 6:45 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second row (3 cards) -->
+        <div class="weather-card box">
+          <h2>Vertical Bar Chart</h2>
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="weather-card box">
+          <h2>Doughnut Chart</h2>
+          <canvas id="doughnutChart"></canvas>
+        </div>
+        <div class="weather-card box">
+          <h2>Line Chart</h2>
+          <canvas id="lineChart"></canvas>
+        </div>
+      </section>
+      <footer class="footer">
+        <div class="footer-content">
+          <!-- Logo and Social Media Links -->
+          <div class="footer-section footer-logo-social">
+            <p class="footer-logo">WeaCast</p>
+            <p>Stay updated with real-time weather forecasts.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"
+                ><img src="resources/images/insta.png" alt="Twitter"
+              /></a>
+              <a href="#" aria-label="Facebook"
+                ><img src="resources/images/insta.png" alt="Facebook"
+              /></a>
+              <a href="#" aria-label="Instagram"
+                ><img src="resources/images/insta.png" alt="Instagram"
+              /></a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Weather Map</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter Subscription -->
+          <div class="footer-section footer-newsletter">
+            <h4>Subscribe to Our Newsletter</h4>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" required />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+
+          <!-- Contact Us -->
+          <div class="footer-section footer-contact">
+            <h4>Contact Us</h4>
+            <p>Email: support@WeaCast.com</p>
+            <p>Phone: +1 800 123 456</p>
+            <p>Address: 123 Weather St, New York, USA</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 WeaCast. All rights reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </div>
+      </footer>
+    </main>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
